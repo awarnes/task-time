@@ -74,7 +74,7 @@ class Task extends Component {
               {taskType[1]}
             </Typography>
             <Typography variant="h5" component="h2">
-              {countdown(startTime).toString()}
+              {status ? countdown(startTime).toString() : "0"}
             </Typography>
           </CardContent>
           <CardActions style={{justifyContent: "center"}}>

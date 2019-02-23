@@ -1,0 +1,16 @@
+{
+  "users": {
+    "applesauce": {
+      "taskTypes": ["apple"],
+      "taskEvents": [
+        {
+          "type": "apple",
+          "uid": "asdfadfgawet",
+          "startTime": 1,
+          "endTime": 14,
+          "timeZone": "America/Los_Angeles"
+        }
+      ]
+    }
+  }
+}

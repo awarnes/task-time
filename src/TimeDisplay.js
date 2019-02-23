@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import moment from 'moment-timezone'
-
 import {
   Button,
   Table,
@@ -8,10 +7,18 @@ import {
   TableCell,
   TableHead,
   TableRow
-}
-  from '@material-ui/core'
+} from '@material-ui/core'
+import Alert from './Alert'
 
 class TimeDisplay extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      alertOpen: false,
+      currentEvent: ""
+    }
+  }
 
   displayTime = (time) => {
     const milliseconds = time % 1000;
@@ -23,8 +30,20 @@ class TimeDisplay extends Component {
     return [days, hours, minutes, seconds, milliseconds].join(":");
   }
 
+  toggleAlert = (evtKey) => {
+    if (!this.state.alertOpen) {
+      this.setState({
+        currentEvent: evtKey,
+        alertOpen: true
+      })
+    } else {
+      this.setState({alertOpen: false})
+    }
+  }
+
   render() {
     const { userData, deleteTaskEvent } = this.props
+    const { alertOpen } = this.state
     const taskRows = Object.keys(userData.taskEvents).map(eventKey => {
       let eventData = userData.taskEvents[eventKey]
       
@@ -34,7 +53,7 @@ class TimeDisplay extends Component {
           <TableCell>{moment(eventData.startTime).tz(eventData.timeZone).format("D/M/YYYY h:mm:ss a")}</TableCell>
           <TableCell>{moment(eventData.endTime).tz(eventData.timeZone).format("D/M/YYYY h:mm:ss a")}</TableCell>
           <TableCell>{this.displayTime(eventData.runningTime)}</TableCell>
-          <TableCell><Button type="button" onClick={() => {deleteTaskEvent(eventKey)}} style={{color: "red"}}>Delete Event</Button></TableCell>
+          <TableCell><Button type="button" onClick={() => {this.toggleAlert(eventKey)}} style={{color: "red"}}>Delete Event</Button></TableCell>
         </TableRow>
       )
     })
@@ -60,8 +79,6 @@ class TimeDisplay extends Component {
         </TableRow>
       )
     })
-
-
 
     return (
       <div>
@@ -95,6 +112,18 @@ class TimeDisplay extends Component {
             {timeByTask}
           </TableBody>
         </Table>
+        <Alert
+          deleteContext={{
+            type: "Event",
+            text: "delete this event"
+          }}
+          alertOpen={alertOpen}
+          handleCancel={this.toggleAlert}
+          handleAccept={() => {
+            deleteTaskEvent(this.state.currentEvent)
+            this.toggleAlert()
+          }}
+        />
       </div>
     )
   }

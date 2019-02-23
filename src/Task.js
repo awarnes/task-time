@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import moment from 'moment'
 import countdown from 'countdown'
-
 import {
   Button,
   Card,
@@ -10,6 +9,8 @@ import {
   Typography,
   GridListTile
 } from '@material-ui/core'
+
+import Alert from './Alert'
 
 class Task extends Component {
   constructor(props) {
@@ -21,7 +22,9 @@ class Task extends Component {
       endTime: null,
       runningTime: 0,
       timeZone: "America/Los_Angeles",
-      type: this.props.taskType[1] || "unregistered"
+      type: this.props.taskType[1] || "unregistered",
+      alertOpen: false,
+      currentTask: ""
     }
   }
 
@@ -62,9 +65,20 @@ class Task extends Component {
     }    
   };
 
+  toggleAlert = (taskType) => {
+    if (!this.state.alertOpen) {
+      this.setState({
+        currentTask: taskType,
+        alertOpen: true
+      })
+    } else {
+      this.setState({alertOpen: false})
+    }
+  }
+
   render () {
     const { taskType, deleteTaskType } = this.props;
-    const { startTime, status } = this.state;
+    const { startTime, status, alertOpen } = this.state;
     
     return (
       <GridListTile>
@@ -84,11 +98,23 @@ class Task extends Component {
             >{status ? "Stop" : "Start"}</Button>
             <Button
               size="small"
-              onClick={() => { deleteTaskType(taskType[0]) }}
+              onClick={() => { this.toggleAlert(taskType[0]) }}
               style={{color: "red"}}
             >Delete Task</Button>
           </CardActions>
         </Card>
+        <Alert
+          deleteContext={{
+            type: "Task",
+            text: "delete this task"
+          }}
+          alertOpen={alertOpen}
+          handleCancel={this.toggleAlert}
+          handleAccept={() => {
+            deleteTaskType(this.state.currentTask)
+            this.toggleAlert()
+          }}
+        />
       </GridListTile>
     )
   }

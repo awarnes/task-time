@@ -23,7 +23,7 @@ class EventTotalsDisplay extends Component {
     const timeByTask = Object.entries(Object.keys(userData.taskEvents).reduce((total, eventKey) => {
       let eventData = userData.taskEvents[eventKey]
       if (total[eventData.type]) {
-        total[eventData.type] = total[eventData.type] + eventData.runningTime
+        total[eventData.type] += (eventData.endTime - eventData.startTime)
       } else {
         total[eventData.type] = eventData.runningTime
       }

@@ -15,14 +15,20 @@ class Navigation extends Component {
     }
   }
 
+  getCurrentScreen = (location) => {
+    return location.pathname.replace("/", "").toUpperCase()
+  }
+
   render() {
     const { user, toggleNavDrawer, navOpen, history } = this.props
+    const currentScreen = this.getCurrentScreen(this.props.location)
     return (
       <div>
         <NavBar
           user={user}
           toggleNavDrawer={toggleNavDrawer}
           handleNavAuth={this.handleNavAuth}
+          currentScreen={currentScreen}
         />
         <NavDrawer
           user={user}

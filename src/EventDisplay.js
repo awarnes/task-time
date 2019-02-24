@@ -78,7 +78,7 @@ class EventDisplay extends Component {
             {moment(eventData.endTime).tz(eventData.timeZone).format("D/M/YYYY h:mm:ss a")}
           </TableCell>
           <TableCell>
-            {displayTime(eventData.runningTime)}
+            {displayTime(eventData.endTime - eventData.startTime)}
           </TableCell>
           <TableCell>
             <Button onClick={() => {this.toggleAlert(eventKey)}} style={{color: "red"}}>
@@ -91,7 +91,7 @@ class EventDisplay extends Component {
 
     const totalTime = Object.keys(userData.taskEvents).reduce((total, eventKey) => {
       let eventData = userData.taskEvents[eventKey]
-      return total += eventData.runningTime
+      return total += (eventData.endTime - eventData.startTime)
     }, 0)
 
     return (

@@ -76,14 +76,22 @@ class NavDrawer extends Component {
               { user ? navItems : <div/> }
             </List>
             <Divider />
+            { user ? 
             <List>
               <ListItem key="userWelcome">
-                <ListItemText primary={user ? `Welcome, ${user.displayName}!` : ""} />
+                <ListItemText primary={`Welcome, ${user.displayName}!`} />
               </ListItem>
               <Button onClick={handleNavAuth} className={classes.authButton}>
-                { user ? "Log Out" : "Log In" }
+                Log Out
               </Button>
             </List>
+            :
+            <List>
+              <Button onClick={handleNavAuth} className={classes.authButton}>
+                Log In
+              </Button>
+            </List>
+            }
           </div>
         </div>
       </Drawer>

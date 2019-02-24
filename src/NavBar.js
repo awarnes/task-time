@@ -26,7 +26,7 @@ const styles = {
 
 class NavBar extends Component {
   render() {
-    const { user, toggleNavDrawer, handleNavAuth, classes } = this.props
+    const { user, toggleNavDrawer, handleNavAuth, currentScreen, classes } = this.props
 
     return (
       <div className={classes.root}>
@@ -36,7 +36,7 @@ class NavBar extends Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" className={classes.grow}>
-              Welcome {user ? `, ${user.displayName}` : "To TaskTime"}!
+              {currentScreen}
             </Typography>
             <Button color="inherit" onClick={handleNavAuth}>{user ? "Log Out" : "Log In"}</Button>
           </Toolbar>

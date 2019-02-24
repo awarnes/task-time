@@ -59,7 +59,13 @@ class Task extends Component {
           status: !status
         },
       () => {
-        this.props.addTaskEvent(this.state)
+        const newTask = {
+          endTime: this.state.endTime,
+          startTime: this.state.startTime,
+          timeZone: this.state.timeZone,
+          type: this.state.type,
+        }
+        this.props.addTaskEvent(newTask)
       })
     } else {
       const startTime = moment.now();

@@ -1,15 +1,30 @@
 import React, { Component } from 'react'
-import moment from 'moment'
+import moment from 'moment-timezone'
 import {
   Table,
   TableHead,
   TableRow,
   TableCell,
   TableBody,
-  Button
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  withStyles,
+  Typography
 } from '@material-ui/core'
 import Alert from './Alert'
 import { displayTime } from './Utilities'
+
+const styles = {
+  eventTable: {
+    backgroundColor: "white"
+  },
+  card: {
+    display: "flex",
+    justifyContent: "center"
+  }
+}
 
 class EventDisplay extends Component {
   state = {
@@ -29,8 +44,25 @@ class EventDisplay extends Component {
   }
 
   render() {
-    const { userData, deleteTaskEvent } = this.props
+    const { userData, deleteTaskEvent, history, classes } = this.props
     const { alertOpen } = this.state
+
+    if (!userData || !userData.taskEvents) {
+      return (
+        <Card className={classes.card}>
+          <CardContent>
+            <Typography variant="h5" component="h2">
+              It looks like you haven't created any events yet.
+            </Typography>
+          </CardContent>
+          <CardActions>
+            <Button onClick={() => {history.push("/dashboard")}}>
+              Start a task!
+            </Button>
+          </CardActions>
+        </Card>
+      )
+    }
 
     const taskRows = Object.keys(userData.taskEvents).map(eventKey => {
       let eventData = userData.taskEvents[eventKey]
@@ -46,7 +78,7 @@ class EventDisplay extends Component {
             {moment(eventData.endTime).tz(eventData.timeZone).format("D/M/YYYY h:mm:ss a")}
           </TableCell>
           <TableCell>
-            {this.displayTime(eventData.runningTime)}
+            {displayTime(eventData.runningTime)}
           </TableCell>
           <TableCell>
             <Button onClick={() => {this.toggleAlert(eventKey)}} style={{color: "red"}}>
@@ -64,7 +96,7 @@ class EventDisplay extends Component {
 
     return (
       <div>
-        <Table>
+        <Table className={classes.eventTable}>
           <TableHead>
             <TableRow>
               <TableCell>Task</TableCell>
@@ -98,4 +130,4 @@ class EventDisplay extends Component {
   }
 }
 
-export default EventDisplay
+export default withStyles(styles)(EventDisplay)

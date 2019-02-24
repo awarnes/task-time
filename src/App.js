@@ -79,7 +79,7 @@ class App extends Component {
   addTaskType = async (name) => {
     let addedNewType = false;
     if (!name) return addedNewType;
-    
+
     const taskTypeRef = fire.database().ref(`/users/${this.state.user.uid}/taskTypes`)
     await taskTypeRef.once('value')
       .then(snapshot => snapshot.val())
@@ -134,7 +134,8 @@ class App extends Component {
           
           <Route exact path={`/dashboard`}
             render={props => (
-              <UserDashboard {...props}
+              <UserDashboard
+                {...props}
                 user={user}
                 userData={userData}
                 addTaskType={this.addTaskType}
@@ -147,7 +148,8 @@ class App extends Component {
 
           <Route exact path={`/reports`}
             render={props => (
-              <ReportScreen {...props}
+              <ReportScreen
+                {...props}
                 user={user}
                 userData={userData}
                 deleteTaskEvent={this.deleteTaskEvent}

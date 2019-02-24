@@ -77,6 +77,9 @@ class NavDrawer extends Component {
             </List>
             <Divider />
             <List>
+              <ListItem key="userWelcome">
+                <ListItemText primary={user ? `Welcome, ${user.displayName}!` : ""} />
+              </ListItem>
               <Button onClick={handleNavAuth} className={classes.authButton}>
                 { user ? "Log Out" : "Log In" }
               </Button>

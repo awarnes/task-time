@@ -66,22 +66,23 @@ class UserDashboard extends Component {
   render () {
     const { user, userData, addTaskEvent, deleteTaskType, classes } = this.props;
     const { addingTask, taskNameError } = this.state
-    if (!user) {
-      return <Redirect to={`/`}/>
-    }
+    if (!user) return <Redirect to={`/`}/>;
 
     const tasks = userData && userData.taskTypes && Object.entries(userData.taskTypes).map(taskType => {
       return <Task key={taskType[0]} taskType={taskType} addTaskEvent={addTaskEvent} deleteTaskType={deleteTaskType} />
     })
+    
     return (
       <div>
-        <Typography variant="h3">
-          Current Tasks
-        </Typography>
-        <br/>
-        <GridList className={classes.gridList}>
-          {tasks || <div><h5>No Tasks Found!</h5></div>}
-        </GridList>
+        {tasks ?
+          <GridList className={classes.gridList}>
+            {tasks}
+          </GridList>
+        :
+          <Typography variant="h5" component="h2">
+            No Tasks Found, Add A Task With The Button Below!
+          </Typography>
+        }
         <Button onClick={this.toggleAddNewTask}>
           Add A Task
         </Button>

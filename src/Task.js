@@ -7,10 +7,18 @@ import {
   CardContent,
   CardActions,
   Typography,
-  GridListTile
+  GridListTile,
+  Paper,
+  withStyles
 } from '@material-ui/core'
 
 import Alert from './Alert'
+
+const styles = {
+  tile: {
+    margin: "3px"
+  }
+}
 
 class Task extends Component {
   constructor(props) {
@@ -77,11 +85,11 @@ class Task extends Component {
   }
 
   render () {
-    const { taskType, deleteTaskType } = this.props;
+    const { taskType, deleteTaskType, classes} = this.props;
     const { startTime, status, alertOpen } = this.state;
     
     return (
-      <GridListTile>
+      <GridListTile component={Paper} className={classes.tile}>
         <Card style={{maxWidth: 250, textAlign: "center"}}>
           <CardContent>
             <Typography style={{fontSize: 14}} color="textSecondary" gutterBottom>
@@ -120,4 +128,4 @@ class Task extends Component {
   }
 }
 
-export default Task;
+export default withStyles(styles)(Task)

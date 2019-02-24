@@ -2,13 +2,29 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import {
   Button,
-  Input,
   GridList,
-  Typography
+  Typography,
+  withStyles,
+  TextField,
+  Card
 } from '@material-ui/core'
 
 import Task from './Task'
 import DashboardReport from './DashboardReport';
+
+const styles = {
+  gridList: {
+    padding: "5px"
+  },
+  addTaskPaper: {
+    padding: "5px",
+    margin: "3px",
+    maxWidth: 180,
+    display: "flex",
+    flexFlow: "row no-wrap",
+    justifyContent: "center", 
+  }
+}
 
 class UserDashboard extends Component {
   constructor(props) {
@@ -21,15 +37,19 @@ class UserDashboard extends Component {
     }
   }
 
-  handleAddNewTask = () => {
-    this.setState({addingTask: true})
+  toggleAddNewTask = () => {
+    this.setState({addingTask: !this.state.addingTask})
   }
 
   handleTaskNameChange = (evt) => {
-    this.setState({taskName: evt.target.value})
+    this.setState({
+      taskName: evt.target.value,
+      taskNameError: ""
+    })
   }
 
-  handleSaveTaskName = async () => {
+  handleSaveTaskName = async (event) => {
+    event.preventDefault()
     if (await this.props.addTaskType(this.state.taskName)) {
       this.setState({
         addingTask: false,
@@ -44,8 +64,8 @@ class UserDashboard extends Component {
   }
 
   render () {
-    const { user, userData, addTaskEvent, deleteTaskType } = this.props;
-    const { addingTask, taskName, taskNameError } = this.state
+    const { user, userData, addTaskEvent, deleteTaskType, classes } = this.props;
+    const { addingTask, taskNameError } = this.state
     if (!user) {
       return <Redirect to={`/`}/>
     }
@@ -59,34 +79,44 @@ class UserDashboard extends Component {
           Current Tasks
         </Typography>
         <br/>
-        <GridList>
+        <GridList className={classes.gridList}>
           {tasks || <div><h5>No Tasks Found!</h5></div>}
         </GridList>
-        <Button type="button" onClick={this.handleAddNewTask}>Add A Task</Button>
+        <Button onClick={this.toggleAddNewTask}>
+          Add A Task
+        </Button>
         {
           addingTask ?
-            <div>
-              <Input
-                type="text"
-                onChange={this.handleTaskNameChange}
-                placeholder="New Task Name..."
-              />
-              <Button
-                type="button"
-                onClick={this.handleSaveTaskName}
-                value={taskName}>
-                Save
-              </Button>
-              <p style={{color: "red"}}>{taskNameError}</p>
-            </div>
+            <Card className={classes.addTaskPaper}>
+              <form onSubmit={this.handleSaveTaskName}>
+                <div>
+                  <TextField
+                    id="taskNameField"
+                    required
+                    label="Task Name"
+                    onChange={this.handleTaskNameChange}
+                    placeholder="New Task Name..."
+                    helperText={taskNameError}
+                    FormHelperTextProps={{error: true}}
+                    autoComplete="off"
+                  />
+                </div>
+                <div>
+                  <Button type="submit">
+                    Save
+                  </Button>
+                  <Button onClick={this.toggleAddNewTask}>
+                    Cancel
+                  </Button>
+                </div>
+              </form>
+            </Card>
           :
             <div/>
         }
-        <br/>
-        <br/>
         <DashboardReport userData={userData} />
       </div>
     )
   }
 }
-export default UserDashboard
+export default withStyles(styles)(UserDashboard)

@@ -77,8 +77,10 @@ class App extends Component {
   }
 
   addTaskType = async (name) => {
-    const taskTypeRef = fire.database().ref(`/users/${this.state.user.uid}/taskTypes`)
     let addedNewType = false;
+    if (!name) return addedNewType;
+    
+    const taskTypeRef = fire.database().ref(`/users/${this.state.user.uid}/taskTypes`)
     await taskTypeRef.once('value')
       .then(snapshot => snapshot.val())
       .then(data => {

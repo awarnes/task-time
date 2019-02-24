@@ -4,10 +4,15 @@ import {
   List,
   ListItem,
   ListItemText,
+  ListItemIcon,
   Divider,
   withStyles,
   Button
 } from "@material-ui/core"
+
+import TimerIcon from "@material-ui/icons/Timer"
+import DescriptionIcon from "@material-ui/icons/Description"
+import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos"
 
 const styles = {
   list: {
@@ -18,6 +23,17 @@ const styles = {
     width: "100%"
   }
 }
+
+const navigationItems = [
+  {
+    text:"Dashboard",
+    icon:<TimerIcon />
+  },
+  {
+    text: "Reports",
+    icon:<DescriptionIcon />
+  }
+]
 
 class NavDrawer extends Component {
   handleNav = (location) => {
@@ -33,10 +49,11 @@ class NavDrawer extends Component {
 
   render() {
     const { navOpen, user, toggleNavDrawer, handleNavAuth, classes } = this.props
-    const navItems = ["Dashboard", "Reports"].map((text) => {
+    const navItems = navigationItems.map((item) => {
       return (
-        <ListItem button key={text} onClick={() => {this.handleNav(text)}}>
-          <ListItemText primary={text} />
+        <ListItem button key={item.text} onClick={() => {this.handleNav(item.text)}}>
+          <ListItemIcon>{item.icon}</ListItemIcon>
+          <ListItemText primary={item.text} />
         </ListItem>
       )
     })
@@ -53,7 +70,9 @@ class NavDrawer extends Component {
             <List>
               <ListItem key="navBarTitle">
                 <ListItemText primary="TaskTime" />
+                <ListItemIcon><ArrowBackIosIcon /></ListItemIcon>
               </ListItem>
+              <Divider />
               { user ? navItems : <div/> }
             </List>
             <Divider />

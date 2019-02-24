@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
-import Task from './Task'
-import {Redirect} from 'react-router-dom'
-import TimeDisplay from './TimeDisplay'
-
+import { Redirect } from 'react-router-dom'
 import {
   Button,
   Input,
   GridList,
   Typography
 } from '@material-ui/core'
+
+import Task from './Task'
+import DashboardReport from './DashboardReport';
 
 class UserDashboard extends Component {
   constructor(props) {
@@ -44,7 +44,7 @@ class UserDashboard extends Component {
   }
 
   render () {
-    const { user, userData, addTaskEvent, deleteTaskType, deleteTaskEvent } = this.props;
+    const { user, userData, addTaskEvent, deleteTaskType } = this.props;
     const { addingTask, taskName, taskNameError } = this.state
     if (!user) {
       return <Redirect to={`/`}/>
@@ -84,13 +84,7 @@ class UserDashboard extends Component {
         }
         <br/>
         <br/>
-        <Typography variant="h3">
-          Metrics
-        </Typography>
-        <br/>
-        {/* <div>
-          {userData && userData.taskEvents ? <TimeDisplay userData={userData} deleteTaskEvent={deleteTaskEvent}/> : <div><h5>No Events Found!</h5></div>}
-        </div> */}
+        <DashboardReport userData={userData} />
       </div>
     )
   }

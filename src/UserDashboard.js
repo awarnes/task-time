@@ -44,23 +44,17 @@ class UserDashboard extends Component {
   }
 
   render () {
-    const { user, userName, userData, logOut, newTaskEvent, deleteTaskType, deleteTaskEvent } = this.props;
+    const { user, userData, addTaskEvent, deleteTaskType, deleteTaskEvent } = this.props;
     const { addingTask, taskName, taskNameError } = this.state
     if (!user) {
       return <Redirect to={`/`}/>
     }
 
     const tasks = userData && userData.taskTypes && Object.entries(userData.taskTypes).map(taskType => {
-      return <Task key={taskType[0]} taskType={taskType} newTaskEvent={newTaskEvent} deleteTaskType={deleteTaskType} />
+      return <Task key={taskType[0]} taskType={taskType} addTaskEvent={addTaskEvent} deleteTaskType={deleteTaskType} />
     })
     return (
       <div>
-        <Typography variant="h1">
-          Welcome, {userName}!
-        </Typography>
-        <Button onClick={logOut}>Log Out</Button>
-        <br/>
-        <br/>
         <Typography variant="h3">
           Current Tasks
         </Typography>
@@ -94,9 +88,9 @@ class UserDashboard extends Component {
           Metrics
         </Typography>
         <br/>
-        <div>
+        {/* <div>
           {userData && userData.taskEvents ? <TimeDisplay userData={userData} deleteTaskEvent={deleteTaskEvent}/> : <div><h5>No Events Found!</h5></div>}
-        </div>
+        </div> */}
       </div>
     )
   }

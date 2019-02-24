@@ -1,20 +1,19 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import { Paper } from '@material-ui/core';
+
 import fire, { auth, provider } from './firebaseConfig';
 
-import LoginPage from './LoginPage'
+import SplashPage from './SplashPage'
 import UserDashboard from './UserDashboard'
-import { Paper } from '@material-ui/core';
+import Navigation from './Navigation'
+import ReportScreen from './ReportScreen'
+
 class App extends Component {
-
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      user: null,
-      userName: "",
-      userData: {}
-    }
+  state = {
+    user: null,
+    userData: {},
+    navOpen: false
   }
 
   componentDidMount() {
@@ -27,16 +26,14 @@ class App extends Component {
               data[user.uid] = {taskTypes: [], taskEvents: []}
               fire.database().ref('users/').set(data)
             }
-            this.setState({
-              user,
-              userName: user.displayName
-            },() => { this.getUserInformation() })
+            this.setState({user},
+              () => { this.getUserInformation() }
+            )
           })
           .catch(console.error)
       }
     })
     fire.database().ref(`users/`).on('value', this.updateUserData)
-
   }
 
   componentWillUnmount() {
@@ -70,9 +67,13 @@ class App extends Component {
     auth.signOut()
       .then(() => {
         this.setState({
-          user: null
+          user: null,
         })
       })
+  }
+
+  toggleNavDrawer = () => {
+    this.setState({navOpen: !this.state.navOpen})
   }
 
   addTaskType = async (name) => {
@@ -95,7 +96,7 @@ class App extends Component {
   }
   
 
-  newTaskEvent = (eventData) => {
+  addTaskEvent = (eventData) => {
     fire.database().ref(`/users/${this.state.user.uid}/taskEvents`).push(eventData)
   }
 
@@ -105,35 +106,53 @@ class App extends Component {
 
   render() {
 
-    const { user, userData, userName } = this.state
+    const { user, userData, navOpen } = this.state
     return (
       <Router>
         <Paper>
+          <Route path='/' render={props => (
+            <Navigation
+              {...props}
+              user={user}
+              navOpen={navOpen}
+              toggleNavDrawer={this.toggleNavDrawer}
+              logIn={this.login}
+              logOut={this.logout}
+            />
+          )} />
+        
           <Route exact path='/'
             render={(props) => (
-              this.state.user ?
-                (<Redirect to={`${user.uid}/dashboard`} />)
+              user ?
+                <Redirect to={`/dashboard`} />
                 :
-                (<LoginPage {...props}
-                  login={this.login}
-                />)
+                <SplashPage {...props} />
             )}
           />
           
-          <Route path={`/:uid/dashboard`}
+          <Route exact path={`/dashboard`}
             render={props => (
               <UserDashboard {...props}
                 user={user}
-                userName={userName}
                 userData={userData}
-                logOut={this.logout}
                 addTaskType={this.addTaskType}
                 deleteTaskType={this.deleteTaskType}
-                newTaskEvent={this.newTaskEvent}
+                addTaskEvent={this.addTaskEvent}
                 deleteTaskEvent={this.deleteTaskEvent}
               />
             )}
           />
+
+          <Route exact path={`/reports`}
+            render={props => (
+              <ReportScreen {...props}
+                user={user}
+                userData={userData}
+                deleteTaskEvent={this.deleteTaskEvent}
+              />
+            )}
+          />
+
         </Paper>
       </Router>
     );

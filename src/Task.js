@@ -51,7 +51,7 @@ class Task extends Component {
           status: !status
         },
       () => {
-        this.props.newTaskEvent(this.state)
+        this.props.addTaskEvent(this.state)
       })
     } else {
       const startTime = moment.now();

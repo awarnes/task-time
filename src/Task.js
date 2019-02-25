@@ -1,15 +1,24 @@
 import React, { Component } from 'react'
 import moment from 'moment'
 import countdown from 'countdown'
-
 import {
   Button,
   Card,
   CardContent,
   CardActions,
   Typography,
-  GridListTile
+  GridListTile,
+  Paper,
+  withStyles
 } from '@material-ui/core'
+
+import Alert from './Alert'
+
+const styles = {
+  tile: {
+    margin: "3px"
+  }
+}
 
 class Task extends Component {
   constructor(props) {
@@ -21,7 +30,9 @@ class Task extends Component {
       endTime: null,
       runningTime: 0,
       timeZone: "America/Los_Angeles",
-      type: this.props.taskType[1] || "unregistered"
+      type: this.props.taskType[1] || "unregistered",
+      alertOpen: false,
+      currentTask: ""
     }
   }
 
@@ -48,7 +59,13 @@ class Task extends Component {
           status: !status
         },
       () => {
-        this.props.newTaskEvent(this.state)
+        const newTask = {
+          endTime: this.state.endTime,
+          startTime: this.state.startTime,
+          timeZone: this.state.timeZone,
+          type: this.state.type,
+        }
+        this.props.addTaskEvent(newTask)
       })
     } else {
       const startTime = moment.now();
@@ -62,19 +79,30 @@ class Task extends Component {
     }    
   };
 
+  toggleAlert = (taskType) => {
+    if (!this.state.alertOpen) {
+      this.setState({
+        currentTask: taskType,
+        alertOpen: true
+      })
+    } else {
+      this.setState({alertOpen: false})
+    }
+  }
+
   render () {
-    const { taskType, deleteTaskType } = this.props;
-    const { startTime, status } = this.state;
+    const { taskType, deleteTaskType, classes} = this.props;
+    const { startTime, status, alertOpen } = this.state;
     
     return (
-      <GridListTile>
+      <GridListTile component={Paper} className={classes.tile}>
         <Card style={{maxWidth: 250, textAlign: "center"}}>
           <CardContent>
             <Typography style={{fontSize: 14}} color="textSecondary" gutterBottom>
               {taskType[1]}
             </Typography>
             <Typography variant="h5" component="h2">
-              {countdown(startTime).toString()}
+              {status ? countdown(startTime).toString() : "0"}
             </Typography>
           </CardContent>
           <CardActions style={{justifyContent: "center"}}>
@@ -84,14 +112,26 @@ class Task extends Component {
             >{status ? "Stop" : "Start"}</Button>
             <Button
               size="small"
-              onClick={() => { deleteTaskType(taskType[0]) }}
+              onClick={() => { this.toggleAlert(taskType[0]) }}
               style={{color: "red"}}
             >Delete Task</Button>
           </CardActions>
         </Card>
+        <Alert
+          deleteContext={{
+            type: "Task",
+            text: "delete this task"
+          }}
+          alertOpen={alertOpen}
+          handleCancel={this.toggleAlert}
+          handleAccept={() => {
+            deleteTaskType(this.state.currentTask)
+            this.toggleAlert()
+          }}
+        />
       </GridListTile>
     )
   }
 }
 
-export default Task;
+export default withStyles(styles)(Task)

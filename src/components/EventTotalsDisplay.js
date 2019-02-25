@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import {
   Table,
   TableHead,
@@ -12,7 +13,7 @@ import {
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp'
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
 
-import { displayTime } from './Utilities'
+import { displayTime } from '../utilities/Utilities'
 
 const styles = {
   root: {
@@ -86,6 +87,11 @@ class EventTotalsDisplay extends Component {
       </div>
     )
   }
+}
+
+EventTotalsDisplay.propTypes = {
+  userData: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 }
 
 export default withStyles(styles)(EventTotalsDisplay)

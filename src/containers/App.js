@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import { Paper } from '@material-ui/core';
 
-import fire, { auth, provider } from './firebaseConfig';
+import fire, { auth, provider } from '../utilities/firebaseConfig';
 
 import SplashPage from './SplashPage'
 import UserDashboard from './UserDashboard'
@@ -30,7 +30,7 @@ class App extends Component {
               () => { this.getUserInformation() }
             )
           })
-          .catch(console.error)
+          .catch(console.error) // eslint-disable-line
       }
     })
     fire.database().ref(`users/`).on('value', this.updateUserData)

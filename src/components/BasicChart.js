@@ -1,4 +1,6 @@
+/* eslint no-unused-vars: 0 */
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Bar } from 'react-chartjs-2';
 import {
   Paper,
@@ -206,6 +208,11 @@ class BasicChart extends Component {
       </Paper>
     )
   }
+}
+
+BasicChart.propTypes = {
+  userData: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 }
 
 export default withStyles(styles)(BasicChart)

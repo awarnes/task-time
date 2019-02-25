@@ -1,9 +1,7 @@
 import React, {Component} from 'react'
-
 import Typography from "@material-ui/core/Typography"
 
 class SplashPage extends Component {
-
   render () {
     return (
       <div>

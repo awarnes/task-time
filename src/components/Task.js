@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import moment from 'moment'
 import countdown from 'countdown'
 import {
@@ -36,7 +37,7 @@ class Task extends Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     countdown.setLabels(
       ' | | | | | |',
       ' | | | | | |',
@@ -132,6 +133,14 @@ class Task extends Component {
       </GridListTile>
     )
   }
+}
+
+Task.propTypes = {
+  key: PropTypes.string.isRequired,
+  taskType: PropTypes.array.isRequired,
+  addTaskEvent: PropTypes.func.isRequired,
+  deleteTaskType: PropTypes.func.isRequired,
+  classes: PropTypes.object.isRequired
 }
 
 export default withStyles(styles)(Task)

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import PropTypes from 'prop-types'
 import NavBar from './NavBar'
 import NavDrawer from './NavDrawer'
 
@@ -20,8 +20,8 @@ class Navigation extends Component {
   }
 
   render() {
-    const { user, toggleNavDrawer, navOpen, history } = this.props
-    const currentScreen = this.getCurrentScreen(this.props.location)
+    const { user, toggleNavDrawer, navOpen, history, location } = this.props
+    const currentScreen = this.getCurrentScreen(location)
     return (
       <div>
         <NavBar
@@ -40,6 +40,16 @@ class Navigation extends Component {
       </div>
     )
   }
+}
+
+Navigation.propTypes = {
+  user: PropTypes.object.isRequired,
+  toggleNavDrawer: PropTypes.func.isRequired,
+  navOpen: PropTypes.bool.isRequired,
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  logIn: PropTypes.func.isRequired,
+  logOut: PropTypes.func.isRequired
 }
 
 export default Navigation

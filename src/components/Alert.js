@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import {
   Dialog,
   DialogTitle,
@@ -12,7 +13,6 @@ import {
 class Alert extends Component {
 
   render() {
-
     const { deleteContext, alertOpen, handleCancel, handleAccept } = this.props
     return (
       <Dialog
@@ -39,6 +39,13 @@ class Alert extends Component {
         </Dialog>
     )
   }
+}
+
+Alert.propTypes = {
+  deleteContext: PropTypes.object.isRequired,
+  alertOpen: PropTypes.bool.isRequired,
+  handleCancel: PropTypes.func.isRequired,
+  handleAccept: PropTypes.func.isRequired
 }
 
 export default Alert

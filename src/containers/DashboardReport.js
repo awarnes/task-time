@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import Typography from '@material-ui/core/Typography';
+import PropTypes from 'prop-types'
+import {
+  withStyles,
+  ExpansionPanel,
+  ExpansionPanelSummary,
+  ExpansionPanelDetails,
+  Typography,
+ } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import EventTotalsDisplay from './EventTotalsDisplay';
+import EventTotalsDisplay from '../components/EventTotalsDisplay';
+
+
 const styles = theme => ({
   root: {
     width: '100%',
@@ -32,6 +37,11 @@ class DashboardReport extends Component {
       </div>
     )
   }
+}
+
+DashboardReport.propTypes = {
+  userData: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 }
 
 export default withStyles(styles)(DashboardReport)

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import {
   Drawer,
   List,
@@ -97,6 +98,15 @@ class NavDrawer extends Component {
       </Drawer>
     )
   }
+}
+
+NavDrawer.propTypes = {
+  user: PropTypes.object.isRequired,
+  toggleNavDrawer: PropTypes.func.isRequired,
+  handleNavAuth: PropTypes.func.isRequired,
+  navOpen: PropTypes.bool.isRequired,
+  classes: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired
 }
 
 export default withStyles(styles)(NavDrawer)

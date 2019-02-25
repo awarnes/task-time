@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Redirect } from 'react-router-dom'
 import {
   Button,
@@ -8,8 +9,7 @@ import {
   TextField,
   Card
 } from '@material-ui/core'
-
-import Task from './Task'
+import Task from '../components/Task'
 import DashboardReport from './DashboardReport';
 
 const styles = {
@@ -120,4 +120,15 @@ class UserDashboard extends Component {
     )
   }
 }
+
+UserDashboard.propTypes = {
+  user: PropTypes.object.isRequired,
+  userData: PropTypes.object.isRequired,
+  addTaskType: PropTypes.func.isRequired,
+  deleteTaskType: PropTypes.func.isRequired,
+  addTaskEvent: PropTypes.func.isRequired,
+  deleteTaskEvent: PropTypes.func.isRequired,
+  classes: PropTypes.object.isRequired
+}
+
 export default withStyles(styles)(UserDashboard)

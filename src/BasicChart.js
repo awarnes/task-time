@@ -117,7 +117,7 @@ class BasicChart extends Component {
       labels: filterByTaskTypes ? activeTaskTypes : [],
       datasets: [
         {
-          label: `Filtered by ${filterByTaskTypes ? "Task Types" : activeBucketFilter}`,
+          label: `Filtered by ${filterByTaskTypes ? "Task Types (Minutes)" : activeBucketFilter}`,
           backgroundColor: 'rgba(255,99,132,0.2)',
           borderColor: 'rgba(255,99,132,1)',
           borderWidth: 1,
@@ -187,7 +187,7 @@ class BasicChart extends Component {
         <Divider />
         <div className={classes.filterContainer}>
           <div>
-            <FormControlLabel
+            {/* <FormControlLabel
               control={<Switch
                 onChange={() => { this.setState({filterByTaskTypes: !filterByTaskTypes})}}
                 checked={filterByTaskTypes}
@@ -195,13 +195,13 @@ class BasicChart extends Component {
               />}
             label="Filter by Task Type"
             />
-            <br />
+            <br /> */}
             { taskFilters }
           </div>
-          <Divider />
+          {/* <Divider />
           <div>
             { timeBucketFilters }
-          </div>
+          </div> */}
         </div>
       </Paper>
     )

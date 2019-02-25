@@ -47,11 +47,11 @@ class NavBar extends Component {
 }
 
 NavBar.propTypes = {
-  user: PropTypes.object.isRequired,
-  toggleNavDrawer: PropTypes.func.isRequired,
-  handleNavAuth: PropTypes.func.isRequired,
-  currentScreen: PropTypes.string.isRequired,
-  classes: PropTypes.object.isRequired
+  user: PropTypes.object,
+  toggleNavDrawer: PropTypes.func,
+  handleNavAuth: PropTypes.func,
+  currentScreen: PropTypes.string,
+  classes: PropTypes.object
 }
 
 export default withStyles(styles)(NavBar);

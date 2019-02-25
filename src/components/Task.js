@@ -136,11 +136,11 @@ class Task extends Component {
 }
 
 Task.propTypes = {
-  key: PropTypes.string.isRequired,
-  taskType: PropTypes.array.isRequired,
-  addTaskEvent: PropTypes.func.isRequired,
-  deleteTaskType: PropTypes.func.isRequired,
-  classes: PropTypes.object.isRequired
+  key: PropTypes.string,
+  taskType: PropTypes.array,
+  addTaskEvent: PropTypes.func,
+  deleteTaskType: PropTypes.func,
+  classes: PropTypes.object
 }
 
 export default withStyles(styles)(Task)

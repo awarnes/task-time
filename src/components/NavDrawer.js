@@ -101,12 +101,12 @@ class NavDrawer extends Component {
 }
 
 NavDrawer.propTypes = {
-  user: PropTypes.object.isRequired,
-  toggleNavDrawer: PropTypes.func.isRequired,
-  handleNavAuth: PropTypes.func.isRequired,
-  navOpen: PropTypes.bool.isRequired,
-  classes: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired
+  user: PropTypes.object,
+  toggleNavDrawer: PropTypes.func,
+  handleNavAuth: PropTypes.func,
+  navOpen: PropTypes.bool,
+  classes: PropTypes.object,
+  history: PropTypes.object
 }
 
 export default withStyles(styles)(NavDrawer)

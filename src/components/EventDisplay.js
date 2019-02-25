@@ -132,10 +132,10 @@ class EventDisplay extends Component {
 }
 
 EventDisplay.propTypes = {
-  userData: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
-  classes: PropTypes.object.isRequired,
-  deleteTaskEvent: PropTypes.func.isRequired
+  userData: PropTypes.object,
+  history: PropTypes.object,
+  classes: PropTypes.object,
+  deleteTaskEvent: PropTypes.func
 }
 
 export default withStyles(styles)(EventDisplay)

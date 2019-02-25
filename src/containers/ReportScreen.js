@@ -50,10 +50,10 @@ class ReportScreen extends Component {
 }
 
 ReportScreen.propTypes = {
-  user: PropTypes.object.isRequired,
-  userData: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
-  deleteTaskEvent: PropTypes.func.isRequired
+  user: PropTypes.object,
+  userData: PropTypes.object,
+  history: PropTypes.object,
+  deleteTaskEvent: PropTypes.func
 }
 
 export default ReportScreen

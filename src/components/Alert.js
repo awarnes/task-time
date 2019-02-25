@@ -42,10 +42,10 @@ class Alert extends Component {
 }
 
 Alert.propTypes = {
-  deleteContext: PropTypes.object.isRequired,
-  alertOpen: PropTypes.bool.isRequired,
-  handleCancel: PropTypes.func.isRequired,
-  handleAccept: PropTypes.func.isRequired
+  deleteContext: PropTypes.object,
+  alertOpen: PropTypes.bool,
+  handleCancel: PropTypes.func,
+  handleAccept: PropTypes.func
 }
 
 export default Alert

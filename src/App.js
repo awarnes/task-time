@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import { Paper } from '@material-ui/core';
 
-import fire, { auth, provider } from '../utilities/firebaseConfig';
+import fire, { auth, provider } from './utilities/firebaseConfig';
 
-import SplashPage from './SplashPage'
-import UserDashboard from './UserDashboard'
-import Navigation from './Navigation'
-import ReportScreen from './ReportScreen'
+import SplashPage from './containers/SplashPage'
+import UserDashboard from './containers/UserDashboard'
+import Navigation from './containers/Navigation'
+import ReportScreen from './containers/ReportScreen'
 
 class App extends Component {
   state = {

@@ -122,13 +122,13 @@ class UserDashboard extends Component {
 }
 
 UserDashboard.propTypes = {
-  user: PropTypes.object.isRequired,
-  userData: PropTypes.object.isRequired,
-  addTaskType: PropTypes.func.isRequired,
-  deleteTaskType: PropTypes.func.isRequired,
-  addTaskEvent: PropTypes.func.isRequired,
-  deleteTaskEvent: PropTypes.func.isRequired,
-  classes: PropTypes.object.isRequired
+  user: PropTypes.object,
+  userData: PropTypes.object,
+  addTaskType: PropTypes.func,
+  deleteTaskType: PropTypes.func,
+  addTaskEvent: PropTypes.func,
+  deleteTaskEvent: PropTypes.func,
+  classes: PropTypes.object
 }
 
 export default withStyles(styles)(UserDashboard)

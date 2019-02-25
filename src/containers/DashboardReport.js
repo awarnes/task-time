@@ -40,8 +40,8 @@ class DashboardReport extends Component {
 }
 
 DashboardReport.propTypes = {
-  userData: PropTypes.object.isRequired,
-  classes: PropTypes.object.isRequired
+  userData: PropTypes.object,
+  classes: PropTypes.object
 }
 
 export default withStyles(styles)(DashboardReport)

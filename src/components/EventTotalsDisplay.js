@@ -90,8 +90,8 @@ class EventTotalsDisplay extends Component {
 }
 
 EventTotalsDisplay.propTypes = {
-  userData: PropTypes.object.isRequired,
-  classes: PropTypes.object.isRequired
+  userData: PropTypes.object,
+  classes: PropTypes.object
 }
 
 export default withStyles(styles)(EventTotalsDisplay)

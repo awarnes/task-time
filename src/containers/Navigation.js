@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import NavBar from './NavBar'
-import NavDrawer from './NavDrawer'
+import NavBar from '../components/NavBar'
+import NavDrawer from '../components/NavDrawer'
 
 class Navigation extends Component {
 
@@ -43,13 +43,13 @@ class Navigation extends Component {
 }
 
 Navigation.propTypes = {
-  user: PropTypes.object.isRequired,
-  toggleNavDrawer: PropTypes.func.isRequired,
-  navOpen: PropTypes.bool.isRequired,
-  history: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
-  logIn: PropTypes.func.isRequired,
-  logOut: PropTypes.func.isRequired
+  user: PropTypes.object,
+  toggleNavDrawer: PropTypes.func,
+  navOpen: PropTypes.bool,
+  history: PropTypes.object,
+  location: PropTypes.object,
+  logIn: PropTypes.func,
+  logOut: PropTypes.func
 }
 
 export default Navigation

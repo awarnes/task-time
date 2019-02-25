@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import moment from 'moment-timezone'
 import {
   Table,
@@ -14,7 +15,7 @@ import {
   Typography
 } from '@material-ui/core'
 import Alert from './Alert'
-import { displayTime } from './Utilities'
+import { displayTime } from '../utilities/Utilities'
 
 const styles = {
   eventTable: {
@@ -52,7 +53,7 @@ class EventDisplay extends Component {
         <Card className={classes.card}>
           <CardContent>
             <Typography variant="h5" component="h2">
-              It looks like you haven't created any events yet.
+              {"It looks like you haven't created any events yet."}
             </Typography>
           </CardContent>
           <CardActions>
@@ -128,6 +129,13 @@ class EventDisplay extends Component {
       </div>
     )
   }
+}
+
+EventDisplay.propTypes = {
+  userData: PropTypes.object,
+  history: PropTypes.object,
+  classes: PropTypes.object,
+  deleteTaskEvent: PropTypes.func
 }
 
 export default withStyles(styles)(EventDisplay)

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import PropTypes from 'prop-types'
 import {
   AppBar,
   Toolbar,
@@ -44,6 +44,14 @@ class NavBar extends Component {
       </div>
     )
   }
+}
+
+NavBar.propTypes = {
+  user: PropTypes.object,
+  toggleNavDrawer: PropTypes.func,
+  handleNavAuth: PropTypes.func,
+  currentScreen: PropTypes.string,
+  classes: PropTypes.object
 }
 
 export default withStyles(styles)(NavBar);

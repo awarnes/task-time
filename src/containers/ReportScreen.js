@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import {
   Tab,
   Tabs,
   AppBar
 } from '@material-ui/core'
 import { Redirect } from "react-router-dom"
-import EventDisplay from './EventDisplay'
-import BasicChart from './BasicChart'
+import EventDisplay from '../components/EventDisplay'
+import BasicChart from '../components/BasicChart'
 
 
 class ReportScreen extends Component {
@@ -46,6 +47,13 @@ class ReportScreen extends Component {
       </div>
     )
   }
+}
+
+ReportScreen.propTypes = {
+  user: PropTypes.object,
+  userData: PropTypes.object,
+  history: PropTypes.object,
+  deleteTaskEvent: PropTypes.func
 }
 
 export default ReportScreen

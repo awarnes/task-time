@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-
-import NavBar from './NavBar'
-import NavDrawer from './NavDrawer'
+import PropTypes from 'prop-types'
+import NavBar from '../components/NavBar'
+import NavDrawer from '../components/NavDrawer'
 
 class Navigation extends Component {
 
@@ -20,8 +20,8 @@ class Navigation extends Component {
   }
 
   render() {
-    const { user, toggleNavDrawer, navOpen, history } = this.props
-    const currentScreen = this.getCurrentScreen(this.props.location)
+    const { user, toggleNavDrawer, navOpen, history, location } = this.props
+    const currentScreen = this.getCurrentScreen(location)
     return (
       <div>
         <NavBar
@@ -40,6 +40,16 @@ class Navigation extends Component {
       </div>
     )
   }
+}
+
+Navigation.propTypes = {
+  user: PropTypes.object,
+  toggleNavDrawer: PropTypes.func,
+  navOpen: PropTypes.bool,
+  history: PropTypes.object,
+  location: PropTypes.object,
+  logIn: PropTypes.func,
+  logOut: PropTypes.func
 }
 
 export default Navigation

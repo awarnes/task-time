@@ -47,7 +47,7 @@ class BasicChart extends Component {
 
   setTaskTypes = () => {
     const { userData } = this.props
-    const taskTypes = Object.values(userData.taskTypes)
+    const taskTypes = Object.values(userData.taskEvents).map(event => event.type).filter((type, ind, arr) => arr.indexOf(type) === ind)
     this.setState({ taskTypes }) 
   }
 

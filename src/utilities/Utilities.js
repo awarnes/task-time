@@ -5,5 +5,6 @@ export const displayTime = (time) => {
   const hours = parseInt(time = time/60)%24;
   const days = parseInt(time = time/24);
 
-  return [days, hours, minutes, seconds, milliseconds].join(":");
+  const secondsAndMilliseconds = [seconds, milliseconds].join('.')
+  return [days, hours, minutes, secondsAndMilliseconds].join(':');
 }

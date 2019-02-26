@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import moment from 'moment-timezone'
 import {
   Table,
   TableHead,
@@ -14,7 +13,8 @@ import {
   withStyles,
   Typography
 } from '@material-ui/core'
-import Alert from './Alert'
+import Alert from '../components/Alert'
+import Event from '../components/Event'
 import { displayTime } from '../utilities/Utilities'
 
 const styles = {
@@ -68,25 +68,12 @@ class EventDisplay extends Component {
     const taskRows = Object.keys(userData.taskEvents).map(eventKey => {
       let eventData = userData.taskEvents[eventKey]
       return (
-        <TableRow key={eventKey}>
-          <TableCell>
-            {eventData.type}
-          </TableCell>
-          <TableCell>
-            {moment(eventData.startTime).tz(eventData.timeZone).format("D/M/YYYY h:mm:ss a")}
-          </TableCell>
-          <TableCell>
-            {moment(eventData.endTime).tz(eventData.timeZone).format("D/M/YYYY h:mm:ss a")}
-          </TableCell>
-          <TableCell>
-            {displayTime(eventData.endTime - eventData.startTime)}
-          </TableCell>
-          <TableCell>
-            <Button onClick={() => {this.toggleAlert(eventKey)}} style={{color: "red"}}>
-              Delete Event
-            </Button>
-          </TableCell>
-        </TableRow>
+        <Event
+          key={eventKey}
+          eventKey={eventKey}
+          eventData={eventData}
+          toggleAlert={this.toggleAlert}
+        />
       )
     })
 

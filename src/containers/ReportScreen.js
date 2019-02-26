@@ -6,7 +6,7 @@ import {
   AppBar
 } from '@material-ui/core'
 import { Redirect } from "react-router-dom"
-import EventDisplay from '../components/EventDisplay'
+import EventDisplay from '../containers/EventDisplay'
 import BasicChart from '../components/BasicChart'
 
 

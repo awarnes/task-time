@@ -23,23 +23,29 @@ class Event extends Component {
     super(props)
     const {eventData} = this.props
     this.state = {
-      newStartTimeValue: moment(eventData.startTime).tz(eventData.timeZone),
-      newEndTimeValue: moment(eventData.endTime).tz(eventData.timeZone),
+      newStartTimeValue: moment(eventData.startTime).tz("America/Los_Angeles"),
+      newEndTimeValue: moment(eventData.endTime).tz("America/Los_Angeles"),
       newTypeValue: eventData.type
     }
   }
   
 
   handleUpdateTypeValue = (evt) => {
-    this.setState({newTypeValue: evt.target.value})
+    this.setState({newTypeValue: evt.target.value}, () => {
+      this.props.updateTaskEvent(this.props.eventKey, this.state)
+    })
   }
 
   handleUpdateStartTimeValue = (newValue) => {
-    this.setState({newStartTimeValue: newValue})
+    this.setState({newStartTimeValue: newValue}, () => {
+      this.props.updateTaskEvent(this.props.eventKey, this.state)
+    })
   }
 
   handleUpdateEndTimeValue = (newValue) => {
-    this.setState({newEndTimeValue: newValue})
+    this.setState({newEndTimeValue: newValue}, () => {
+      this.props.updateTaskEvent(this.props.eventKey, this.state)
+    })
   }
 
   render() {
@@ -79,9 +85,15 @@ class Event extends Component {
             onChange={this.handleUpdateEndTimeValue}
           />
         </TableCell>
+        { newStartTimeValue && newEndTimeValue ?
         <TableCell>
-          {displayTime(newEndTimeValue - newStartTimeValue)}
+          {displayTime(newEndTimeValue.valueOf() - newStartTimeValue.valueOf())}
         </TableCell>
+        :
+        <TableCell>
+          Please add some times!
+        </TableCell>
+        }
         <TableCell>
           <Button onClick={() => {toggleAlert(eventKey)}} style={{color: "red"}}>
             Delete Event
@@ -93,10 +105,11 @@ class Event extends Component {
 }
 
 Event.propTypes = {
-  eventKey: PropTypes.string.isRequired,
-  eventData: PropTypes.object.isRequired,
-  classes: PropTypes.object.isRequired,
-  toggleAlert: PropTypes.func.isRequired
+  eventKey: PropTypes.string,
+  eventData: PropTypes.object,
+  classes: PropTypes.object,
+  toggleAlert: PropTypes.func,
+  updateTaskEvent: PropTypes.func
 }
 
 export default withStyles(styles)(Event)

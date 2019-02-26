@@ -9,7 +9,6 @@ import { Redirect } from "react-router-dom"
 import EventDisplay from '../containers/EventDisplay'
 import BasicChart from '../components/BasicChart'
 
-
 class ReportScreen extends Component {
   state = {
     selectedTab: 0
@@ -21,7 +20,7 @@ class ReportScreen extends Component {
 
   render () {
     const { selectedTab } = this.state
-    const { userData, deleteTaskEvent, user, history } = this.props
+    const { userData, deleteTaskEvent, user, history, addTaskEvent, updateTaskEvent } = this.props
     if (!user) return <Redirect to={`/`}/>
 
     return (
@@ -41,6 +40,8 @@ class ReportScreen extends Component {
               userData={userData}
               deleteTaskEvent={deleteTaskEvent}
               history={history}
+              addTaskEvent={addTaskEvent}
+              updateTaskEvent={updateTaskEvent}
             />
           )}
         </AppBar>
@@ -53,7 +54,9 @@ ReportScreen.propTypes = {
   user: PropTypes.object,
   userData: PropTypes.object,
   history: PropTypes.object,
-  deleteTaskEvent: PropTypes.func
+  deleteTaskEvent: PropTypes.func,
+  updateTaskEvent: PropTypes.func,
+  addTaskEvent: PropTypes.func
 }
 
 export default ReportScreen

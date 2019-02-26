@@ -11,8 +11,16 @@ import {
   CardActions,
   CardContent,
   withStyles,
-  Typography
+  Typography,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TextField
 } from '@material-ui/core'
+import { DateTimePicker } from 'material-ui-pickers'
+import moment from 'moment-timezone'
+
 import Alert from '../components/Alert'
 import Event from '../components/Event'
 import { displayTime } from '../utilities/Utilities'
@@ -24,13 +32,26 @@ const styles = {
   card: {
     display: "flex",
     justifyContent: "center"
+  },
+  dateTimePicker: {
+    margin: "5px",
+    padding: "5px",
+  },
+  newEventContainer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
   }
 }
 
 class EventDisplay extends Component {
   state = {
     alertOpen: false,
-    currentEvent: ""
+    currentEvent: "",
+    addEventOpen: false,
+    newEventStart: moment(),
+    newEventEnd: moment(),
+    newEventType: ""
   }
 
   toggleAlert = (evtKey) => {
@@ -44,9 +65,42 @@ class EventDisplay extends Component {
     }
   }
 
+  toggleNewEventDialog = () => {
+    this.setState({addEventOpen: !this.state.addEventOpen})
+  }
+
+  handleAddNewTaskEvent = () => {
+    if (!this.state.newEventType) return;
+    const newTask = {
+      endTime: moment(this.state.newEventEnd).valueOf(),
+      startTime: moment(this.state.newEventStart).valueOf(),
+      timeZone: "America/Los_Angeles",
+      type: this.state.newEventType,
+    }
+    this.props.addTaskEvent(newTask)
+    this.setState({
+      addEventOpen: false,
+      newEventType: "",
+      newEventStart: moment(),
+      newEventEnd: moment()
+    })
+  }
+
+  handleUpdateTypeValue = (evt) => {
+    this.setState({newEventType: evt.target.value})
+  }
+
+  handleUpdateStartTimeValue = (newValue) => {
+    this.setState({newEventStart: newValue})
+  }
+
+  handleUpdateEndTimeValue = (newValue) => {
+    this.setState({newEventEnd: newValue})
+  }
+
   render() {
-    const { userData, deleteTaskEvent, history, classes } = this.props
-    const { alertOpen } = this.state
+    const { userData, deleteTaskEvent, history, classes, updateTaskEvent } = this.props
+    const { alertOpen, addEventOpen, newEventStart, newEventEnd, newEventType } = this.state
 
     if (!userData || !userData.taskEvents) {
       return (
@@ -73,6 +127,7 @@ class EventDisplay extends Component {
           eventKey={eventKey}
           eventData={eventData}
           toggleAlert={this.toggleAlert}
+          updateTaskEvent={updateTaskEvent}
         />
       )
     })
@@ -84,6 +139,9 @@ class EventDisplay extends Component {
 
     return (
       <div>
+        <Button onClick={this.toggleNewEventDialog}>
+          Add New Task Event
+        </Button>
         <Table className={classes.eventTable}>
           <TableHead>
             <TableRow>
@@ -101,6 +159,9 @@ class EventDisplay extends Component {
             </TableRow>
           </TableBody>
         </Table>
+        <Button onClick={this.toggleNewEventDialog}>
+          Add New Task Event
+        </Button>
         <Alert
           deleteContext={{
             type: "Event",
@@ -113,6 +174,54 @@ class EventDisplay extends Component {
             this.toggleAlert()
           }}
         />
+
+        <Dialog
+          open={addEventOpen}
+          onClose={this.toggleNewEventDialog}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">Add a new task event!</DialogTitle>
+          <DialogContent>
+            <div className={classes.newEventContainer}>
+              <TextField
+                id="taskType"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                error={!newEventType}
+                className={classes.typeText}
+                value={newEventType}
+                onChange={this.handleUpdateTypeValue}
+              />
+              <DateTimePicker
+                autoOk
+                showTodayButton
+                allowKeyboardControl
+                className={classes.dateTimePicker}
+                value={newEventStart}
+                onChange={this.handleUpdateStartTimeValue}
+              />
+              <DateTimePicker
+                autoOk
+                showTodayButton
+                allowKeyboardControl
+                className={classes.dateTimePicker}
+                value={newEventEnd}
+                onChange={this.handleUpdateEndTimeValue}
+              />
+              {displayTime(newEventEnd - newEventStart)}
+            </div>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.toggleNewEventDialog} color="primary" autoFocus>
+              Cancel
+            </Button>
+            <Button onClick={this.handleAddNewTaskEvent} color="primary">
+              Save
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     )
   }
@@ -122,7 +231,9 @@ EventDisplay.propTypes = {
   userData: PropTypes.object,
   history: PropTypes.object,
   classes: PropTypes.object,
-  deleteTaskEvent: PropTypes.func
+  deleteTaskEvent: PropTypes.func,
+  updateTaskEvent: PropTypes.func,
+  addTaskEvent: PropTypes.func
 }
 
 export default withStyles(styles)(EventDisplay)

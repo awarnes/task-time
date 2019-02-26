@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import { Paper } from '@material-ui/core';
+import moment from 'moment-timezone'
 
 import fire, { auth, provider } from './utilities/firebaseConfig';
 
@@ -102,6 +103,16 @@ class App extends Component {
     fire.database().ref(`/users/${this.state.user.uid}/taskEvents`).push(eventData)
   }
 
+  updateTaskEvent = (eventKey, newEvent) => {
+    const newEventData = {
+        endTime: newEvent.newEndTimeValue ? newEvent.newEndTimeValue.valueOf() : moment().valueOf(),
+        startTime: newEvent.newStartTimeValue ? newEvent.newStartTimeValue.valueOf() : moment().valueOf(),
+        type: newEvent.newTypeValue,
+        timeZone: "America/Los_Angeles"
+    }
+    fire.database().ref(`users/${this.state.user.uid}/taskEvents/${eventKey}`).set(newEventData)
+  }
+
   deleteTaskEvent = (key) => {
     fire.database().ref(`/users/${this.state.user.uid}/taskEvents/${key}`).remove()
   }
@@ -153,6 +164,8 @@ class App extends Component {
                 user={user}
                 userData={userData}
                 deleteTaskEvent={this.deleteTaskEvent}
+                addTaskEvent={this.addTaskEvent}
+                updateTaskEvent={this.updateTaskEvent}
               />
             )}
           />
